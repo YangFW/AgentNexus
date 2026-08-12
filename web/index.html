@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentNexus · 工作台</title>
+  <link rel="icon" href="./favicon.svg?v=20260812-3" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css?v=20260812-3" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 36 36"><path class="logo-shell" d="M18 7.5 27 12.7v10.6L18 28.5 9 23.3V12.7Z"/><path class="logo-link" d="M18 14.4V9.8M14.7 20l-4 2.3M21.3 20l4 2.3"/><circle class="logo-core" cx="18" cy="18" r="4"/><circle class="logo-node" cx="18" cy="9.2" r="1.35"/><circle class="logo-node" cx="10.2" cy="22.7" r="1.35"/><circle class="logo-node" cx="25.8" cy="22.7" r="1.35"/></svg>
+        </div>
+        <div class="brand-copy">
+          <div class="brand-title">AgentNexus</div>
+          <div class="brand-subtitle">智枢 · 智能工作平台</div>
+        </div>
+        <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="收起侧边栏" title="收起侧边栏">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 7-5 5 5 5"/><path d="M19 4v16"/></svg>
+        </button>
+      </div>
+      <nav>
+        <button class="nav active" data-tab="chat" title="工作台"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5h16v11H8l-4 3v-14Z"/><path d="M8 9h8M8 12.5h5"/></svg></span><span class="nav-label">工作台</span></button>
+        <button class="nav" data-tab="skills" title="技能中心"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.1 4.9L19 10l-4.9 2.1L12 17l-2.1-4.9L5 10l4.9-2.1L12 3Z"/><path d="m19 16 .8 1.8L22 19l-2.2 1.2L19 22l-.8-1.8L16 19l2.2-1.2L19 16Z"/></svg></span><span class="nav-label">技能中心</span></button>
+        <button class="nav" data-tab="mcp" title="工具接入"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6l-5.3 5.3a1.4 1.4 0 0 0 2 2l5.3-5.3a4 4 0 0 0 5.6-5.6l-2.5 2.5-1.8-.5-.5-1.8 2.8-2.2Z"/></svg></span><span class="nav-label">工具接入</span></button>
+        <button class="nav" data-tab="agents" title="智能体"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m12 3.5 7.2 4.2v8.6L12 20.5l-7.2-4.2V7.7Z"/><circle cx="12" cy="12" r="2.7"/><path d="M12 9.3V6.5M9.7 13.4l-2.5 1.5M14.3 13.4l2.5 1.5"/></svg></span><span class="nav-label">智能体</span></button>
+        <button class="nav" data-tab="experts" title="专家团"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3.5 19c.5-3.2 2-5 4.5-5s4 1.8 4.5 5M13 18.5c.4-2.5 1.7-4 4-4 2.2 0 3.5 1.5 3.8 4"/></svg></span><span class="nav-label">专家团</span></button>
+        <button class="nav" data-tab="memory" title="记忆"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M7.5 5.5A3.5 3.5 0 0 1 14 3.8a3.6 3.6 0 0 1 4.2 4.9A3.6 3.6 0 0 1 18 15a3.7 3.7 0 0 1-6 3.6A3.7 3.7 0 0 1 6 15a3.6 3.6 0 0 1-.2-6.3A3.5 3.5 0 0 1 7.5 5.5Z"/><path d="M9 8.5c1.5.2 2.5 1.2 3 2.5m3-4c-1.5.4-2.5 1.5-3 3m-3 5c1.4-.2 2.5-1 3-2.2m3 2.2c-1.4-.2-2.5-1-3-2.2M12 5v14"/></svg></span><span class="nav-label">记忆</span></button>
+        <button class="nav" data-tab="models" title="模型设置"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 7 12 11l7.5-4L12 3Z"/><path d="m4.5 12 7.5 4 7.5-4M4.5 17l7.5 4 7.5-4"/></svg></span><span class="nav-label">模型设置</span></button>
+        <button class="nav" data-tab="loops" title="自动化"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19 7.5A8 8 0 0 0 5.4 6L3 8.5"/><path d="M3 4v4.5h4.5M5 16.5A8 8 0 0 0 18.6 18l2.4-2.5"/><path d="M21 20v-4.5h-4.5"/></svg></span><span class="nav-label">自动化</span></button>
+        <button class="nav" data-tab="artifacts" title="产物"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M5 3.5h9l5 5V20H5V3.5Z"/><path d="M14 3.5V9h5M8 13h8M8 16.5h6"/></svg></span><span class="nav-label">产物</span></button>
+        <button class="nav" data-tab="tasks" title="运行记录"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2M6 4.5 4 7"/></svg></span><span class="nav-label">运行记录</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <div id="serviceStatus" class="service-status"><span></span><b>正在连接</b></div>
+        <div class="small">当前为本机实例，配置与运行数据统一保存在服务端</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div id="connectionBanner" class="connection-banner hidden">
+        <div><strong>当前是静态预览</strong><span>配置和任务功能需要连接平台服务后才能使用。</span></div>
+        <span>请先启动服务，再访问启动命令显示的 HTTP 地址。</span>
+      </div>
+      <section id="tab-chat" class="tab active">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">任务工作台</div>
+            <h1>今天想完成什么？</h1>
+            <p id="workbenchModeDescription">描述目标或上传资料，任务助手会自动选择合适的技能和工具。</p>
+          </div>
+          <div class="workbench-toolbar">
+            <div class="toolbar workbench-selects">
+              <select id="agentSelect" aria-label="选择智能体"></select>
+              <div id="expertTeamControl" class="expert-team-control hidden">
+                <select id="expertTeamSelect" aria-label="选择专家团"><option value="">自动匹配专家团</option></select>
+                <span id="expertTeamHint">根据目标与已启用团队的匹配规则选择</span>
+              </div>
+              <select id="taskModelSelect" aria-label="选择模型"></select>
+              <button id="newConversationBtn" class="secondary">新对话</button>
+              <button id="refreshBtn" class="icon-button secondary" type="button" aria-label="刷新平台数据" title="刷新"><svg viewBox="0 0 24 24"><path d="M20 6v5h-5"/><path d="M18.2 15.5a7.5 7.5 0 1 1 .8-7L20 11"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace">
+          <div class="chat-panel">
+            <div id="conversation" class="conversation"></div>
+            <div class="composer">
+              <div class="composer-modebar">
+                <span class="composer-mode-label">处理模式</span>
+                <div class="mode-switch" role="group" aria-label="当前处理模式" aria-describedby="composerModeHint">
+                  <button class="mode-option active" data-workbench-mode="agent" type="button" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="m12 3.5 7.2 4.2v8.6L12 20.5l-7.2-4.2V7.7Z"/><circle cx="12" cy="12" r="2.7"/></svg><span><strong>普通模式</strong><small>技能与工具</small></span></button>
+                  <button class="mode-option" data-workbench-mode="expert" type="button" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.7"/><circle cx="17" cy="9" r="2.3"/><path d="M3.8 18.5c.5-2.9 1.9-4.5 4.2-4.5s3.7 1.6 4.2 4.5M13.3 18c.4-2.3 1.6-3.7 3.7-3.7s3.3 1.4 3.7 3.7"/></svg><span><strong>专家模式</strong><small>并行协作</small></span></button>
+                </div>
+                <span id="composerModeHint" class="composer-mode-hint" aria-live="polite">单智能体处理 · 自动匹配技能和工具</span>
+              </div>
+              <div id="uploadList" class="upload-list"></div>
+              <textarea id="messageInput" rows="4" placeholder="输入任务，例如：根据我上传的资料生成一份项目分析报告…"></textarea>
+              <div class="composer-actions">
+                <div class="toolbar"><label class="file-button"><span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>添加附件<input id="fileInput" type="file" multiple /></label><button id="exampleBtn" class="text-button">试试示例</button></div>
+                <button id="sendBtn" class="primary-action">发送 <span><svg viewBox="0 0 24 24"><path d="m6 12 6-6 6 6M12 6v12"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+          <div class="inspector">
+            <h3>任务概览</h3>
+            <div id="taskMeta" class="meta empty">尚未创建任务</div>
+            <h3>运行控制</h3>
+            <div id="taskRuntime" class="runtime-panel empty">
+              <div id="runtimeSummary" class="runtime-summary">
+                <div><strong>尚未选择任务</strong><span>创建或打开任务后，可在这里控制运行并恢复现场。</span></div>
+                <span id="runtimeLiveStatus" class="runtime-live-status idle">未运行</span>
+              </div>
+              <div class="runtime-actions" aria-label="任务运行操作">
+                <button id="cancelTaskBtn" class="runtime-action danger-action" type="button" disabled>取消</button>
+                <button id="retryTaskBtn" class="runtime-action secondary" type="button" disabled>重试</button>
+                <button id="resumeTaskBtn" class="runtime-action secondary" type="button" disabled>恢复</button>
+              </div>
+              <div class="runtime-message-box">
+                <label for="runtimeMessage">追加指令</label>
+                <textarea id="runtimeMessage" rows="2" placeholder="补充新的约束或信息，将进入任务指令队列" disabled></textarea>
+                <div><span>发送后由运行时在安全节点处理</span><button id="runtimeMessageBtn" type="button" disabled>加入队列</button></div>
+              </div>
+              <div class="runtime-sections">
+                <details class="runtime-section" open>
+                  <summary><span>运行尝试</span><small id="runtimeRunCount">0</small></summary>
+                  <div id="runtimeRuns" class="runtime-list"><div class="runtime-empty">暂无运行记录</div></div>
+                </details>
+                <details class="runtime-section" open>
+                  <summary><span>节点状态</span><small id="runtimeNodeCount">0</small></summary>
+                  <div id="runtimeNodes" class="runtime-list"><div class="runtime-empty">暂无节点记录</div></div>
+                </details>
+                <details class="runtime-section">
+                  <summary><span>指令队列</span><small id="runtimeCommandCount">0</small></summary>
+                  <div id="runtimeCommands" class="runtime-list"><div class="runtime-empty">暂无排队指令</div></div>
+                </details>
+                <details class="runtime-section">
+                  <summary><span>检查点</span><small id="runtimeCheckpointCount">0</small></summary>
+                  <div id="runtimeCheckpoints" class="runtime-list"><div class="runtime-empty">暂无可恢复检查点</div></div>
+                </details>
+              </div>
+              <div class="runtime-privacy">仅展示执行状态和操作记录，不展示模型内部思考内容。</div>
+            </div>
+            <h3>执行过程</h3>
+            <div id="timeline" class="timeline"></div>
+            <h3>生成文件</h3>
+            <div id="artifacts" class="artifacts empty">暂无产物</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-skills" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">可复用流程</div><h1>技能中心</h1>
+            <p>创建和维护可复用的任务流程，让智能体按统一规范工作。</p>
+          </div>
+          <div class="toolbar"><label class="file-button">导入技能包<input id="skillPackageInput" type="file" accept=".md,.zip" /></label><button id="newSkillBtn">新建技能</button></div>
+        </div>
+        <div class="download-bar"><div><strong>从下载链接安装</strong><span>支持公开的 SKILL.md 或 ZIP 直链</span></div><input id="skillDownloadUrl" placeholder="https://raw.githubusercontent.com/.../SKILL.md" /><button id="installSkillUrlBtn">安装</button></div>
+        <div class="split">
+          <div id="skillList" class="card-list"></div>
+          <div class="editor-card">
+            <div class="editor-header">
+              <h2 id="skillEditorTitle">选择一个技能</h2>
+              <div class="toolbar"><button id="deleteSkillBtn" class="secondary hidden">卸载</button><button id="saveSkillBtn" class="secondary">保存</button></div>
+            </div>
+            <div class="form-grid">
+              <label>ID<input id="skillId" /></label>
+              <label>名称<input id="skillName" /></label>
+              <label>分类<input id="skillCategory" /></label>
+              <label>版本<input id="skillVersion" /></label>
+            </div>
+            <label>描述<textarea id="skillDescription" rows="2"></textarea></label>
+            <label>依赖工具，逗号分隔<input id="skillMcps" /></label>
+            <label class="checkbox"><input id="skillEnabled" type="checkbox" /> 启用</label>
+            <label>技能指令<textarea id="skillContent" class="code" rows="24"></textarea></label>
+            <div class="package-manager">
+              <div class="package-header"><div><h3>Skill 包文件</h3><p>查看和维护 scripts、references、rules、assets 等附属文件。</p><div id="skillPackageStatus" class="small"></div></div><div class="toolbar"><button id="exportSkillBtn" class="secondary" type="button" disabled>导出 ZIP</button><label class="file-button bordered">上传/替换文件<input id="skillFileUploadInput" type="file" /></label><button id="newSkillFileBtn" class="secondary" type="button">新增文件</button></div></div>
+              <div class="package-grid">
+                <div id="skillFileList" class="skill-file-list"><div class="meta empty">选择技能后查看包文件</div></div>
+                <div class="skill-file-editor">
+                  <label>文件路径<input id="skillFilePath" placeholder="references/rules.md" /></label>
+                  <div id="skillFileMeta" class="small">尚未选择文件</div>
+                  <label>文件内容<textarea id="skillFileContent" class="code" rows="16" disabled></textarea></label>
+                  <div class="toolbar"><button id="deleteSkillFileBtn" class="secondary hidden" type="button">删除文件</button><button id="saveSkillFileBtn" type="button" disabled>保存文件</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-mcp" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">外部能力</div><h1>工具接入</h1>
+            <p>连接本地或远程工具服务，并管理智能体可使用的操作。</p>
+          </div><div class="toolbar"><label class="file-button bordered">导入 JSON 配置<input id="mcpImportInput" type="file" accept=".json,application/json" /></label><button id="newMcpBtn">添加工具服务</button></div>
+        </div>
+        <div class="download-bar"><div><strong>从下载链接安装</strong><span>支持公开的 MCP JSON 配置直链</span></div><input id="mcpDownloadUrl" placeholder="https://raw.githubusercontent.com/.../mcp.json" /><button id="installMcpUrlBtn">安装</button></div>
+        <div class="split">
+          <div id="mcpList" class="card-list"></div>
+          <div class="editor-card">
+            <h2 id="mcpTitle">选择工具服务</h2>
+            <div id="mcpDetails" class="meta"></div>
+            <div class="form-grid two">
+              <label>ID<input id="mcpId" /></label><label>名称<input id="mcpName" /></label>
+              <label>类型<select id="mcpKind"><option value="builtin">平台内置</option><option value="mcp_stdio">本地 stdio MCP</option><option value="mcp_http">远程 Streamable HTTP MCP</option><option value="http">普通 HTTP 工具</option></select></label>
+              <label>描述<input id="mcpDescription" /></label>
+            </div>
+            <label>配置 JSON<textarea id="mcpConfig" class="code" rows="6">{}</textarea></label>
+            <label class="checkbox"><input id="mcpEnabled" type="checkbox" /> 启用</label>
+            <div class="toolbar"><button id="deleteMcpBtn" class="secondary hidden">卸载</button><button id="saveMcpBtn">保存配置</button><button id="discoverMcpBtn" class="secondary">连接并同步工具</button></div>
+            <h3>工具</h3>
+            <div id="toolList"></div>
+            <h3>调用测试</h3>
+            <div class="form-grid two">
+              <label>Server ID<input id="testServerId" /></label>
+              <label>Tool Name<input id="testToolName" /></label>
+            </div>
+            <label>Arguments JSON<textarea id="toolArgs" class="code" rows="8">{}</textarea></label>
+            <button id="invokeToolBtn">调用工具</button>
+            <pre id="toolResult" class="result-box"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-agents" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">任务助手</div><h1>智能体</h1>
+            <p>为不同工作场景配置模型、技能、工具和操作权限。</p>
+          </div><button id="newAgentBtn">新建智能体</button>
+        </div>
+        <div class="split"><div id="agentList" class="card-list"></div><div class="editor-card">
+          <h2 id="agentEditorTitle">新建或选择智能体</h2>
+          <div class="form-grid two"><label>ID<input id="agentId" /></label><label>名称<input id="agentName" /></label><label>模型<select id="agentModel"></select></label><label>描述<input id="agentDescription" /></label></div>
+          <label>系统提示词<textarea id="agentPrompt" rows="5"></textarea></label>
+          <label>技能 ID（逗号分隔）<input id="agentSkills" /></label><label>工具服务 ID（逗号分隔）<input id="agentMcps" /></label>
+          <label>权限配置 JSON<textarea id="agentPermissions" class="code" rows="5">{}</textarea></label><button id="saveAgentBtn">保存智能体</button>
+        </div></div>
+      </section>
+
+      <section id="tab-experts" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">协同处理</div><h1>专家团</h1>
+            <p>把可复用的专家配置安装为智能体，按独立分工并行执行，再由主管统一汇总和验收。</p>
+          </div>
+          <div class="toolbar"><button id="reloadExpertsBtn" class="secondary">刷新</button><button id="newExpertTemplateBtn" class="secondary">新建模板</button><button id="newExpertTeamBtn">新建团队</button></div>
+        </div>
+
+        <div class="expert-studio">
+          <section class="expert-block">
+            <div class="expert-block-heading"><div><span class="expert-step">01</span><h2>专家模板与安装</h2><p>模板描述专家能力；安装后生成可参与团队协作的智能体。</p></div><span id="expertTemplateCount" class="expert-count">0 个模板</span></div>
+            <div class="expert-library-layout">
+              <div>
+                <div id="expertTemplateList" class="card-list expert-template-list" aria-live="polite"></div>
+                <div class="section-heading"><h3>已安装专家</h3><span id="expertInstallationCount">0</span></div>
+                <div id="expertInstallationList" class="expert-installation-list" aria-live="polite"></div>
+              </div>
+              <div class="editor-card expert-template-editor">
+                <div class="editor-header">
+                  <div><h2 id="expertTemplateEditorTitle">新建专家模板</h2><div id="expertTemplateEditorMeta" class="small">配置可复用的角色、能力和权限边界</div></div>
+                  <div class="toolbar"><button id="deleteExpertTemplateBtn" class="secondary hidden">删除</button><button id="saveExpertTemplateBtn">保存模板</button></div>
+                </div>
+                <div class="form-grid two">
+                  <label>模板 ID<input id="expertTemplateId" placeholder="research-expert" /></label>
+                  <label>名称<input id="expertTemplateName" placeholder="研究分析专家" /></label>
+                  <label>版本<input id="expertTemplateVersion" value="0.1.0" /></label>
+                  <label>保存范围<select id="expertTemplateVisibility"><option value="organization">当前实例</option><option value="workspace">当前工作区</option><option value="private">本机使用者</option><option value="public">实例内公共</option></select></label>
+                </div>
+                <label>说明<textarea id="expertTemplateDescription" rows="2" placeholder="说明该专家擅长处理什么问题。"></textarea></label>
+                <div class="expert-json-grid">
+                  <label>专家配置 JSON<textarea id="expertTemplateManifest" class="code" rows="10"></textarea></label>
+                  <label>模板权限 JSON<textarea id="expertTemplatePermissions" class="code" rows="10">{}</textarea></label>
+                </div>
+                <label class="checkbox"><input id="expertTemplateEnabled" type="checkbox" checked /> 启用模板</label>
+                <div class="expert-install-box">
+                  <div><strong>安装为专家</strong><span>可指定 Agent ID 和安装后的附加权限；留空 ID 会自动生成。</span></div>
+                  <div class="form-grid two">
+                    <label>Agent ID（可选）<input id="expertInstallAgentId" placeholder="自动生成" /></label>
+                    <label>安装范围<select id="expertInstallVisibility"><option value="private">本机使用者</option><option value="workspace">当前工作区</option><option value="organization">当前实例</option></select></label>
+                  </div>
+                  <label>安装权限 JSON<textarea id="expertInstallPermissions" class="code" rows="3">{}</textarea></label>
+                  <button id="installExpertTemplateBtn" type="button" disabled>安装当前模板</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="expert-block">
+            <div class="expert-block-heading"><div><span class="expert-step">02</span><h2>团队编排</h2><p>选择主管和至少两位成员；成员使用彼此隔离的上下文并行工作。</p></div><span id="expertTeamCount" class="expert-count">0 个团队</span></div>
+            <div class="expert-team-layout">
+              <div id="expertTeamList" class="card-list expert-team-list" aria-live="polite"></div>
+              <div class="editor-card expert-team-editor">
+                <div class="editor-header">
+                  <div><h2 id="expertTeamEditorTitle">新建专家团</h2><div id="expertTeamEditorMeta" class="small">主管负责最终汇总与目标验收</div></div>
+                  <div class="toolbar"><button id="deleteExpertTeamBtn" class="secondary hidden">删除</button><button id="saveExpertTeamBtn">保存团队</button></div>
+                </div>
+                <div class="form-grid two">
+                  <label>团队 ID<input id="expertTeamId" placeholder="product-review-team" /></label>
+                  <label>团队名称<input id="expertTeamName" placeholder="产品评审专家团" /></label>
+                  <label>主管<select id="expertTeamSupervisor"></select></label>
+                  <label>保存范围<select id="expertTeamVisibility"><option value="organization">当前实例</option><option value="workspace">当前工作区</option><option value="private">本机使用者</option></select></label>
+                </div>
+                <label>团队说明<textarea id="expertTeamDescription" rows="2" placeholder="说明团队适合承接的目标。"></textarea></label>
+                <label>主管汇总要求<textarea id="expertTeamAggregationPrompt" rows="4" placeholder="例如：整合成员结论，标出分歧、风险和可执行建议，并逐项检查验收标准。"></textarea></label>
+                <div class="expert-json-grid">
+                  <label>验收标准 JSON<textarea id="expertTeamAcceptance" class="code" rows="5"></textarea></label>
+                  <label>团队权限 JSON<textarea id="expertTeamPermissions" class="code" rows="5">{}</textarea></label>
+                </div>
+                <label class="checkbox"><input id="expertTeamEnabled" type="checkbox" checked /> 启用团队</label>
+                <div class="expert-members-header"><div><h3>并行成员</h3><span id="expertMemberCount" class="small">至少 2 位</span></div><button id="addExpertMemberBtn" class="secondary" type="button">添加成员</button></div>
+                <div id="expertTeamMembers" class="expert-member-list"></div>
+                <div class="expert-boundary-note">这里展示角色、分工、权限、任务状态和交付摘要。当前为单机作用域，保存范围只用于本实例内分组。</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="expert-block">
+            <div class="expert-block-heading"><div><span class="expert-step">03</span><h2>团队运行</h2><p>提交共同目标后持续查看成员进度、子任务和主管最终汇总。</p></div><span id="expertRunLiveMeta" class="expert-count">等待选择团队</span></div>
+            <div class="editor-card expert-run-composer">
+              <div class="form-grid two">
+                <label>当前团队<input id="expertRunTeamName" value="尚未选择" disabled /></label>
+                <label>运行模型<select id="expertRunModel"></select></label>
+              </div>
+              <label>共同目标<textarea id="expertRunGoal" rows="4" placeholder="清楚描述要解决的问题、期望产物和验收要求。"></textarea></label>
+              <div class="expert-run-actions"><span>成员会并行执行，全部完成后主管再汇总。</span><button id="runExpertTeamBtn" type="button" disabled>开始运行</button></div>
+            </div>
+            <div class="expert-run-layout">
+              <div>
+                <div class="section-heading"><h3>运行历史</h3><span id="expertRunCount">0</span></div>
+                <div id="expertRunList" class="expert-run-list"><div class="meta empty">选择团队后查看运行历史</div></div>
+              </div>
+              <div id="expertRunLive" class="editor-card expert-run-live" aria-live="polite">
+                <div class="expert-empty-state"><strong>尚未开始运行</strong><span>选择并保存团队，然后提交一个共同目标。</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-memory" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">长期上下文</div><h1>记忆</h1>
+            <p>管理跨对话生效的规则、偏好和稳定事实；每条记忆都有作用域、来源和修订记录。</p>
+          </div>
+          <div class="toolbar"><button id="refreshMemoriesBtn" class="secondary">刷新</button><button id="newMemoryBtn">新建记忆</button></div>
+        </div>
+        <div class="memory-effective editor-card">
+          <div class="editor-header"><div><h2>当前有效上下文</h2><div id="memoryEffectiveMeta" class="small">尚未读取</div></div><button id="previewMemoryContextBtn" class="secondary">重新计算</button></div>
+          <pre id="memoryEffectiveContext" class="memory-context-preview">当前没有生效的长期记忆。</pre>
+        </div>
+        <div class="conversation-summary-card editor-card">
+          <div class="editor-header">
+            <div><h2>对话摘要</h2><div id="conversationSummaryMeta" class="small">长对话达到阈值后会自动压缩，当前任务不会被摘要替代。</div></div>
+            <div class="toolbar"><button id="deleteConversationSummaryBtn" class="secondary" disabled>删除摘要</button><button id="saveConversationSummaryBtn" disabled>保存摘要</button></div>
+          </div>
+          <div class="conversation-summary-grid">
+            <label>选择对话<select id="conversationSummarySelect" aria-label="选择要查看的对话摘要"></select></label>
+            <label>压缩至任务<input id="conversationSummaryThroughTask" disabled placeholder="尚未自动压缩" /></label>
+          </div>
+          <label>较早对话摘要<textarea id="conversationSummaryContent" rows="5" placeholder="当前对话还没有摘要。完成较多轮对话后，平台会自动压缩较早内容；也可以在这里人工维护。"></textarea></label>
+          <label>必须保留的约束（每行一条）<textarea id="conversationSummaryConstraints" rows="3" placeholder="例如：报告必须使用中文&#10;结论按优先级排序"></textarea></label>
+          <div class="conversation-summary-note"><strong>上下文边界</strong><span>摘要只作为“较早对话背景”注入；本轮最新消息始终是当前目标。删除摘要不会删除原始任务记录。</span></div>
+        </div>
+        <div class="split memory-layout">
+          <div>
+            <div class="memory-filters">
+              <select id="memoryScopeFilter" aria-label="按作用域筛选"><option value="">全部作用域</option><option value="organization">当前实例</option><option value="workspace">当前工作区</option><option value="user">本机使用者</option><option value="agent">智能体</option><option value="conversation">对话</option></select>
+              <select id="memoryStatusFilter" aria-label="按状态筛选"><option value="all">全部状态</option><option value="enabled">已启用</option><option value="disabled">已停用</option></select>
+            </div>
+            <div class="section-heading"><h2>记忆列表</h2><span id="memoryCount">0</span></div>
+            <div id="memoryList" class="card-list memory-list"></div>
+          </div>
+          <div class="editor-card memory-editor">
+            <div class="editor-header"><div><h2 id="memoryEditorTitle">新建记忆</h2><div id="memoryRevisionMeta" class="small">保存后自动记录修订</div></div><div class="toolbar"><button id="deleteMemoryBtn" class="secondary hidden">删除</button><button id="saveMemoryBtn">保存</button></div></div>
+            <input id="memoryId" type="hidden" />
+            <div class="form-grid two">
+              <label>标题<input id="memoryTitle" placeholder="例如：默认文档格式" /></label>
+              <label>类型<select id="memoryKind"><option value="preference">偏好</option><option value="rule">规则</option><option value="fact">事实</option></select></label>
+              <label>作用域<select id="memoryScopeType"><option value="user">本机使用者</option><option value="workspace">当前工作区</option><option value="agent">指定智能体</option><option value="conversation">当前对话</option><option value="organization">当前实例</option></select></label>
+              <label>作用域标识<input id="memoryScopeId" value="local-user" disabled /></label>
+              <label>信任级别<input id="memoryTrust" type="number" min="0" max="100" value="80" /></label>
+              <label>过期时间<input id="memoryExpiresAt" type="datetime-local" /></label>
+            </div>
+            <label>内容<textarea id="memoryContent" rows="8" placeholder="写入希望跨对话保留的规则、偏好或稳定事实。"></textarea></label>
+            <label>标签（逗号分隔）<input id="memoryTags" placeholder="文档, 语言" /></label>
+            <label class="checkbox"><input id="memoryEnabled" type="checkbox" checked /> 启用并注入有效上下文</label>
+            <div class="memory-note"><strong>优先级</strong><span>实例规则 → 工作区规则 → 本机偏好 → 智能体记忆 → 当前对话。当前任务的明确要求优先于普通偏好；这些范围不代表登录用户隔离。</span></div>
+            <div id="memoryRevisions" class="memory-revisions"><div class="meta empty">选择已有记忆后查看修订记录</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-models" class="tab">
+        <div class="topbar"><div><div class="eyebrow">推理服务</div><h1>模型设置</h1><p>管理模型连接。密钥由服务端读取或在本机加密存储，页面不会回显明文。</p></div><button id="newModelBtn">添加模型</button></div>
+        <div class="split"><div><div id="capabilities" class="editor-card"></div><div class="section-heading"><h2>已配置模型</h2><span id="modelCount">0</span></div><div id="modelList" class="card-list model-list"></div></div><div class="editor-card">
+          <h2 id="modelEditorTitle">添加模型配置</h2><div class="form-grid two"><label>ID<input id="modelId" /></label><label>名称<input id="modelName" /></label><label>Provider<select id="modelProvider"><option value="openai_compatible">OpenAI Compatible</option><option value="openai">OpenAI</option></select></label><label>模型名<input id="modelNameValue" placeholder="gpt-5.2" /></label></div>
+          <label>Base URL<input id="modelBaseUrl" placeholder="https://api.openai.com/v1" /></label><label>密钥方式<select id="modelKeyMode"><option value="env">环境变量</option><option value="direct">直接填写 API Key</option></select></label><label id="modelKeyEnvField">API Key 环境变量名<input id="modelApiKeyEnv" placeholder="OPENAI_API_KEY" /></label><label id="modelKeyDirectField" class="hidden">API Key<input id="modelApiKey" type="password" autocomplete="new-password" placeholder="密钥在本机加密保存，页面不会回显" /></label><div id="modelKeyStatus" class="secret-status"></div><label>高级配置 JSON<textarea id="modelConfig" class="code" rows="6">{"temperature":0.2,"timeout":90}</textarea></label><label class="checkbox"><input id="modelEnabled" type="checkbox" checked /> 启用</label><div class="toolbar"><button id="deleteModelBtn" class="secondary hidden">删除模型</button><button id="saveModelBtn">保存模型</button><button id="testModelBtn" class="secondary">测试连接</button></div><pre id="modelTestResult" class="result-box compact">选择模型后可测试连接</pre>
+        </div></div>
+      </section>
+
+      <section id="tab-loops" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">定时与触发</div><h1>自动化</h1>
+            <p>按间隔、Cron、指定时间或 Webhook 触发工作流，每一轮都保留状态变化和运行证据。</p>
+          </div>
+          <div class="toolbar"><button id="reloadLoopsBtn" class="secondary">刷新</button><button id="newLoopBtn">新建自动化</button></div>
+        </div>
+        <div class="loop-layout">
+          <div id="loopList" class="card-list"></div>
+          <div class="editor-card loop-editor">
+            <div class="editor-header">
+              <div><h2 id="loopEditorTitle">新建自动化</h2><div id="loopStatusText" class="small">配置触发条件后可试运行或启动调度</div></div>
+              <div class="toolbar"><button id="deleteLoopBtn" class="secondary hidden">删除</button><button id="saveLoopBtn">保存</button></div>
+            </div>
+            <div id="loopOverview" class="automation-overview" aria-live="polite">
+              <div><span>当前状态</span><strong id="loopOverviewStatus">尚未保存</strong></div>
+              <div><span>触发方式</span><strong id="loopOverviewTrigger">未配置</strong></div>
+              <div><span>下次触发</span><strong id="loopOverviewNext">—</strong></div>
+              <div><span>最近状态变化</span><strong id="loopOverviewDiff">—</strong></div>
+            </div>
+            <div class="form-grid two">
+              <label>ID<input id="loopId" placeholder="留空自动生成" /></label>
+              <label>名称<input id="loopName" placeholder="例如：每小时检查项目风险" /></label>
+              <label>智能体<select id="loopAgent"></select></label>
+              <label>模型<select id="loopModel"></select></label>
+            </div>
+
+            <div class="automation-config-section">
+              <div class="automation-section-heading"><div><h3>触发器</h3><span id="loopScheduleHint">按固定间隔重复触发</span></div><span class="automation-step">01</span></div>
+              <div class="form-grid two">
+                <label>触发方式<select id="loopTriggerType"><option value="interval">固定间隔</option><option value="cron">Cron 计划</option><option value="once">指定时间执行一次</option><option value="webhook">Webhook 事件</option></select></label>
+                <label id="loopIntervalField">执行间隔（秒）<input id="loopInterval" type="number" min="5" max="31536000" value="3600" /></label>
+                <label id="loopCronField" class="hidden">Cron 表达式<input id="loopCronExpression" class="code" placeholder="例如：0 9 * * 1-5" /><small>使用 5 段表达式，按服务器 UTC 时间计算。</small></label>
+                <label id="loopOnceField" class="hidden">执行时间<input id="loopOnceAt" type="datetime-local" /><small>页面按当前设备时区显示，保存时转换为带时区时间。</small></label>
+              </div>
+              <div id="loopWebhookFields" class="automation-webhook hidden">
+                <div class="form-grid two">
+                  <label>签名密钥<input id="loopWebhookSecret" type="password" autocomplete="new-password" minlength="16" placeholder="至少 16 位；已配置时留空表示不修改" /></label>
+                  <label>时间戳容差（秒）<input id="loopWebhookTolerance" type="number" min="30" max="3600" value="300" /></label>
+                </div>
+                <div id="loopWebhookSecretStatus" class="secret-status">尚未配置签名密钥</div>
+                <details class="webhook-guide">
+                  <summary>Webhook 调用与签名说明</summary>
+                  <div><span>地址</span><code id="loopWebhookUrl">/api/loops/{automation_id}/webhook</code></div>
+                  <p>请求必须包含 <code>X-Automation-Timestamp</code>、<code>X-Automation-Signature</code> 和唯一的 <code>Idempotency-Key</code>。签名值为 <code>HMAC-SHA256(secret, timestamp + "." + rawBody)</code>，可带 <code>sha256=</code> 前缀；重复的幂等键不会重复运行。</p>
+                </details>
+              </div>
+            </div>
+
+            <div class="automation-config-section">
+              <div class="automation-section-heading"><div><h3>执行与重试</h3><span>限制运行次数，并在临时失败后按策略重试</span></div><span class="automation-step">02</span></div>
+              <div class="form-grid two">
+              <label>最大轮数<input id="loopMaxRuns" type="number" min="1" max="10000" value="10" /></label>
+              <label>连续失败熔断<input id="loopMaxFailures" type="number" min="1" max="100" value="3" /></label>
+                <label>每轮最多尝试<input id="loopMaxAttempts" type="number" min="1" max="10" value="1" /></label>
+                <label>重试等待（秒）<input id="loopRetryBackoff" type="number" min="0" max="3600" value="0" /></label>
+              </div>
+            </div>
+
+            <label>自动化目标 / 每轮指令<textarea id="loopPrompt" rows="6" placeholder="说明每轮要观察什么、输出什么，以及满足什么条件时可认为目标完成。"></textarea></label>
+            <div class="automation-state-editor">
+              <div class="automation-section-heading"><div><h3 id="loopStateTitle">初始状态</h3><span id="loopStateHint">首轮运行可读取的结构化状态，必须填写 JSON 对象</span></div><span class="automation-step">03</span></div>
+              <textarea id="loopState" class="code" rows="6" spellcheck="false">{}</textarea>
+            </div>
+            <div class="loop-actions">
+              <button id="runLoopBtn" class="secondary" disabled>试运行一轮</button>
+              <button id="startLoopBtn" disabled>启动调度</button>
+              <button id="pauseLoopBtn" class="secondary" disabled>暂停</button>
+            </div>
+            <div class="loop-safety"><strong>安全边界</strong><span>同一自动化不会并发重入；达到最大轮数或连续失败阈值后自动停止。等待审批或缺少必要信息时会暂停后续调度。页面只展示状态和执行证据。</span></div>
+
+            <div class="loop-history-header"><h3>每轮运行历史</h3><span id="loopRunSummary" class="small"></span></div>
+            <div id="loopRuns" class="loop-runs"><div class="meta empty">保存并选择自动化后查看历史</div></div>
+
+            <div class="automation-evidence-grid">
+              <section class="automation-evidence-panel">
+                <div class="loop-history-header"><h3>触发事件</h3><span id="loopTriggerEventSummary" class="small">0 条</span></div>
+                <div id="loopTriggerEvents" class="automation-event-list"><div class="meta empty">保存并选择自动化后查看触发记录</div></div>
+              </section>
+              <section class="automation-evidence-panel">
+                <div class="loop-history-header">
+                  <h3>通知</h3>
+                  <div class="automation-notification-tools"><select id="loopNotificationFilter" aria-label="筛选通知"><option value="all">全部</option><option value="unread">未读</option><option value="read">已读</option></select><span id="loopNotificationSummary" class="small">0 条</span></div>
+                </div>
+                <div id="loopNotifications" class="automation-notification-list"><div class="meta empty">暂无通知</div></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-artifacts" class="tab">
+        <div class="topbar">
+          <div><div class="eyebrow">生成文件</div><h1>产物工作区</h1><p>集中查看每次运行生成的文件、版本、校验值，并在平台内受控预览或下载。</p></div>
+          <div class="toolbar"><select id="artifactKindFilter" aria-label="按文件格式筛选"><option value="">全部格式</option><option value="docx">Word</option><option value="pdf">PDF</option><option value="pptx">PowerPoint</option><option value="xlsx">Excel</option><option value="csv">CSV</option><option value="markdown">Markdown</option><option value="html">HTML</option></select><button id="reloadArtifactsBtn" class="secondary">刷新</button></div>
+        </div>
+        <div class="artifact-workspace">
+          <div class="artifact-list-panel"><div class="section-heading"><h2>文件</h2><span id="artifactCount">0</span></div><div id="artifactWorkspaceList" class="artifact-workspace-list" aria-live="polite"></div></div>
+          <div class="editor-card artifact-preview-panel">
+            <div class="editor-header"><div><h2 id="artifactPreviewTitle">选择文件预览</h2><div id="artifactPreviewMeta" class="small">支持 Word、PDF、PPT、Excel、Markdown 和 HTML</div></div><a id="artifactPreviewDownload" class="button-link hidden" target="_blank" rel="noopener">下载原文件</a></div>
+            <div id="artifactPreview" class="artifact-preview-empty" aria-live="polite">从左侧选择一个文件。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-tasks" class="tab">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">任务历史</div><h1>运行记录</h1>
+            <p>查看历史任务的执行状态、过程和生成文件。</p>
+          </div>
+          <button id="reloadTasksBtn" class="secondary">刷新任务</button>
+        </div>
+        <div id="taskList" class="task-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js?v=20260812-6"></script>
+</body>
+</html>

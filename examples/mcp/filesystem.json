@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "filesystem-local": {
+      "name": "本地文件系统 MCP",
+      "description": "本地文件系统 MCP 配置示例。请仅授权确实需要访问的目录。",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/absolute/path/to/authorized/workspace"
+      ],
+      "env": {}
+    }
+  }
+}
