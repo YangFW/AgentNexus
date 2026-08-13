@@ -147,3 +147,23 @@ data/                     本地运行数据（不提交）
 ```
 
 实现结构见 [架构说明](docs/ARCHITECTURE.md)。可用环境变量以 [.env.example](.env.example) 为准；修改环境变量后需要重启平台进程。
+
+## 参与贡献
+
+欢迎通过 [Issues](https://github.com/YangFW/AgentNexus/issues) 反馈问题，或提交 Pull Request。提交前请确认改动中不包含 `.env`、API Key、数据库、上传文件、生成文件或其他本地运行数据，并在 PR 中说明改动目的、使用方式和验证结果。
+
+## 参考与致谢
+
+AgentNexus 是一个独立开源项目，在协议实现和基础设施层使用或参考了以下公开规范与项目：
+
+- [Model Context Protocol](https://modelcontextprotocol.io/specification/latest) 与 [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)：MCP 服务接入与工具调用。
+- [OpenAI API Reference](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create)：Chat Completions 兼容模型接口。
+- [FastAPI](https://fastapi.tiangolo.com/) 与 [Uvicorn](https://www.uvicorn.org/)：HTTP API、静态页面和事件流服务。
+- [SQLite](https://www.sqlite.org/docs.html)：本地配置与任务数据存储。
+- [Open-Meteo](https://open-meteo.com/en/docs)：内置天气工具的数据接口。
+
+上述名称仅用于说明兼容协议、依赖关系或数据来源，不表示相关项目或机构对 AgentNexus 提供官方背书。第三方组件和外部服务仍分别受其自身许可证与服务条款约束。
+
+## 许可证
+
+AgentNexus 自有源码采用 [MIT License](LICENSE) 发布。
