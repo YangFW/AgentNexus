@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use AgentNexus in your work, please cite it using the metadata below."
+title: AgentNexus
+type: software
+authors:
+  - family-names: "YangFW"
+repository-code: "https://github.com/YangFW/AgentNexus"
+url: "https://github.com/YangFW/AgentNexus"
+license: MIT
+abstract: >-
+  AgentNexus is a browser-based platform for configuring and running AI agents,
+  models, Skills, MCP tools, expert teams, task workflows, and generated files.
+keywords:
+  - AI agents
+  - agent platform
+  - Model Context Protocol
+  - MCP
+  - Skills

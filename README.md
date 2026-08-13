@@ -164,6 +164,22 @@ AgentNexus 是一个独立开源项目，在协议实现和基础设施层使用
 
 上述名称仅用于说明兼容协议、依赖关系或数据来源，不表示相关项目或机构对 AgentNexus 提供官方背书。第三方组件和外部服务仍分别受其自身许可证与服务条款约束。
 
+## 引用
+
+如果 AgentNexus 对你的项目或研究有所帮助，欢迎点亮 Star ⭐。如需在论文、报告或其他成果中引用本项目，可使用以下 BibTeX：
+
+```bibtex
+@software{YangFW_AgentNexus_2026,
+  author  = {{YangFW}},
+  title   = {AgentNexus},
+  year    = {2026},
+  url     = {https://github.com/YangFW/AgentNexus},
+  license = {MIT}
+}
+```
+
+仓库根目录同时提供标准的 [`CITATION.cff`](CITATION.cff)，可供 GitHub 和文献管理工具读取。
+
 ## 许可证
 
 AgentNexus 自有源码采用 [MIT License](LICENSE) 发布。
